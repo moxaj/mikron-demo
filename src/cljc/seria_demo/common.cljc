@@ -12,6 +12,3 @@
              :coord    [:tuple [:float :float]]
              :snapshot [:record {:time   :long
                                  :bodies [:list :body]}]}})
-
-(defn make-data []
-  (pack :snapshot (gen :snapshot)))

@@ -9,15 +9,20 @@
             [clojure.pprint :as pprint]))
 
 (def websocket-callbacks
-  {:on-open    (fn [channel]
-                 (println "Channel opened")
-                 (async/send! channel (common/make-data)))
-   :on-close   (fn [channel {:keys [code reason]}]
-                 (println "Channel closed:" code reason))
-   :on-message (fn [channel message]
-                 (println "Message received:")
-                 (pprint/pprint (:value (common/unpack message)))
-                 (println (format "Size: %d bytes" (count (seq message)))))})
+  (let [sent-value (atom nil)]
+    {:on-open    (fn [channel]
+                   (println "Channel opened")
+                   (let [value (common/gen :snapshot)]
+                     (reset! sent-value value)
+                     (async/send! channel (common/pack :snapshot value))))
+     :on-close   (fn [channel {:keys [code reason]}]
+                   (println "Channel closed:" code reason))
+     :on-message (fn [channel message]
+                   (let [value (:value (common/unpack message))]
+                     (println "Message received:")
+                     (pprint/pprint value)
+                     (println (format "Size: %d bytes" (count (seq message))))
+                     (println (format "Equal to sent: %s" (= value @sent-value)))))}))
 
 (defroutes my-routes
   (GET "/" [] (ring/resource-response "index.html" {:root "public"}))

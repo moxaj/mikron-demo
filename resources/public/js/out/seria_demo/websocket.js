@@ -5,10 +5,10 @@ seria_demo.websocket.field_map = new cljs.core.PersistentArrayMap(null, 5, [cljs
 seria_demo.websocket.open = (function seria_demo$websocket$open(url,args){
 var websocket = (new WebSocket(url));
 cljs.core.run_BANG_(((function (websocket){
-return (function (p__11886){
-var vec__11887 = p__11886;
-var field = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__11887,(0),null);
-var value = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__11887,(1),null);
+return (function (p__11879){
+var vec__11880 = p__11879;
+var field = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__11880,(0),null);
+var value = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__11880,(1),null);
 var temp__4657__auto__ = (seria_demo.websocket.field_map.cljs$core$IFn$_invoke$arity$1 ? seria_demo.websocket.field_map.cljs$core$IFn$_invoke$arity$1(field) : seria_demo.websocket.field_map.call(null,field));
 if(cljs.core.truth_(temp__4657__auto__)){
 var js_field = temp__4657__auto__;

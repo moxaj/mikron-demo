@@ -58,17 +58,17 @@ var this__5296__auto____$1 = this;
 return cljs.core._lookup.cljs$core$IFn$_invoke$arity$3(this__5296__auto____$1,k__5297__auto__,null);
 });
 
-seria.common.DiffedValue.prototype.cljs$core$ILookup$_lookup$arity$3 = (function (this__5298__auto__,k13503,else__5299__auto__){
+seria.common.DiffedValue.prototype.cljs$core$ILookup$_lookup$arity$3 = (function (this__5298__auto__,k13496,else__5299__auto__){
 var self__ = this;
 var this__5298__auto____$1 = this;
-var G__13505 = (((k13503 instanceof cljs.core.Keyword))?k13503.fqn:null);
-switch (G__13505) {
+var G__13498 = (((k13496 instanceof cljs.core.Keyword))?k13496.fqn:null);
+switch (G__13498) {
 case "value":
 return self__.value;
 
 break;
 default:
-return cljs.core.get.cljs$core$IFn$_invoke$arity$3(self__.__extmap,k13503,else__5299__auto__);
+return cljs.core.get.cljs$core$IFn$_invoke$arity$3(self__.__extmap,k13496,else__5299__auto__);
 
 }
 });
@@ -86,10 +86,10 @@ return cljs.core.pr_sequential_writer(writer__5311__auto__,pr_pair__5313__auto__
 
 seria.common.DiffedValue.prototype.cljs$core$IIterable$ = true;
 
-seria.common.DiffedValue.prototype.cljs$core$IIterable$_iterator$arity$1 = (function (G__13502){
+seria.common.DiffedValue.prototype.cljs$core$IIterable$_iterator$arity$1 = (function (G__13495){
 var self__ = this;
-var G__13502__$1 = this;
-return (new cljs.core.RecordIter((0),G__13502__$1,1,new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.cst$kw$value], null),cljs.core._iterator(self__.__extmap)));
+var G__13495__$1 = this;
+return (new cljs.core.RecordIter((0),G__13495__$1,1,new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.cst$kw$value], null),cljs.core._iterator(self__.__extmap)));
 });
 
 seria.common.DiffedValue.prototype.cljs$core$IMeta$_meta$arity$1 = (function (this__5294__auto__){
@@ -155,15 +155,15 @@ return (new seria.common.DiffedValue(self__.value,self__.__meta,cljs.core.not_em
 }
 });
 
-seria.common.DiffedValue.prototype.cljs$core$IAssociative$_assoc$arity$3 = (function (this__5303__auto__,k__5304__auto__,G__13502){
+seria.common.DiffedValue.prototype.cljs$core$IAssociative$_assoc$arity$3 = (function (this__5303__auto__,k__5304__auto__,G__13495){
 var self__ = this;
 var this__5303__auto____$1 = this;
-var pred__13506 = cljs.core.keyword_identical_QMARK_;
-var expr__13507 = k__5304__auto__;
-if(cljs.core.truth_((pred__13506.cljs$core$IFn$_invoke$arity$2 ? pred__13506.cljs$core$IFn$_invoke$arity$2(cljs.core.cst$kw$value,expr__13507) : pred__13506.call(null,cljs.core.cst$kw$value,expr__13507)))){
-return (new seria.common.DiffedValue(G__13502,self__.__meta,self__.__extmap,null));
+var pred__13499 = cljs.core.keyword_identical_QMARK_;
+var expr__13500 = k__5304__auto__;
+if(cljs.core.truth_((pred__13499.cljs$core$IFn$_invoke$arity$2 ? pred__13499.cljs$core$IFn$_invoke$arity$2(cljs.core.cst$kw$value,expr__13500) : pred__13499.call(null,cljs.core.cst$kw$value,expr__13500)))){
+return (new seria.common.DiffedValue(G__13495,self__.__meta,self__.__extmap,null));
 } else {
-return (new seria.common.DiffedValue(self__.value,self__.__meta,cljs.core.assoc.cljs$core$IFn$_invoke$arity$3(self__.__extmap,k__5304__auto__,G__13502),null));
+return (new seria.common.DiffedValue(self__.value,self__.__meta,cljs.core.assoc.cljs$core$IFn$_invoke$arity$3(self__.__extmap,k__5304__auto__,G__13495),null));
 }
 });
 
@@ -173,10 +173,10 @@ var this__5308__auto____$1 = this;
 return cljs.core.seq(cljs.core.concat.cljs$core$IFn$_invoke$arity$2(new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [(new cljs.core.PersistentVector(null,2,(5),cljs.core.PersistentVector.EMPTY_NODE,[cljs.core.cst$kw$value,self__.value],null))], null),self__.__extmap));
 });
 
-seria.common.DiffedValue.prototype.cljs$core$IWithMeta$_with_meta$arity$2 = (function (this__5295__auto__,G__13502){
+seria.common.DiffedValue.prototype.cljs$core$IWithMeta$_with_meta$arity$2 = (function (this__5295__auto__,G__13495){
 var self__ = this;
 var this__5295__auto____$1 = this;
-return (new seria.common.DiffedValue(self__.value,G__13502,self__.__extmap,self__.__hash));
+return (new seria.common.DiffedValue(self__.value,G__13495,self__.__extmap,self__.__hash));
 });
 
 seria.common.DiffedValue.prototype.cljs$core$ICollection$_conj$arity$2 = (function (this__5301__auto__,entry__5302__auto__){
@@ -207,8 +207,8 @@ seria.common.__GT_DiffedValue = (function seria$common$__GT_DiffedValue(value){
 return (new seria.common.DiffedValue(value,null,null,null));
 });
 
-seria.common.map__GT_DiffedValue = (function seria$common$map__GT_DiffedValue(G__13504){
-return (new seria.common.DiffedValue(cljs.core.cst$kw$value.cljs$core$IFn$_invoke$arity$1(G__13504),null,cljs.core.dissoc.cljs$core$IFn$_invoke$arity$2(G__13504,cljs.core.cst$kw$value),null));
+seria.common.map__GT_DiffedValue = (function seria$common$map__GT_DiffedValue(G__13497){
+return (new seria.common.DiffedValue(cljs.core.cst$kw$value.cljs$core$IFn$_invoke$arity$1(G__13497),null,cljs.core.dissoc.cljs$core$IFn$_invoke$arity$2(G__13497,cljs.core.cst$kw$value),null));
 });
 
 seria.common.diffed_QMARK_ = (function seria$common$diffed_QMARK_(value){
