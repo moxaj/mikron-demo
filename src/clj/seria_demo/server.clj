@@ -5,7 +5,8 @@
             [compojure.core :refer :all]
             [compojure.route :as route]
             [ring.util.response :as ring]
-            [seria-demo.common :as common]))
+            [seria-demo.common :as common]
+            [clojure.pprint :as pprint]))
 
 (def websocket-callbacks
   {:on-open    (fn [channel]
@@ -14,8 +15,9 @@
    :on-close   (fn [channel {:keys [code reason]}]
                  (println "Channel closed:" code reason))
    :on-message (fn [channel message]
-                 (println "Message received:"
-                          (:value (common/unpack message))))})
+                 (println "Message received:")
+                 (pprint/pprint (:value (common/unpack message)))
+                 (println (format "Size: %d bytes" (count (seq message)))))})
 
 (defroutes my-routes
   (GET "/" [] (ring/resource-response "index.html" {:root "public"}))

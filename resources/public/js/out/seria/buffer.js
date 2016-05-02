@@ -521,7 +521,7 @@ return this$__$1.readInt32();
 
 ByteBuffer.prototype.seria$buffer$Buffer$read_long_BANG_$arity$1 = (function (this$){
 var this$__$1 = this;
-return this$__$1.readInt64();
+return this$__$1.readInt64().toNumber();
 });
 
 ByteBuffer.prototype.seria$buffer$Buffer$read_float_BANG_$arity$1 = (function (this$){
@@ -613,10 +613,10 @@ this$__$1.writeInt8((this$__$1["bitBuffer"]),(this$__$1["bitPosition"]));
 
 (this$__$1["bitBuffer"] = (0));
 
-var offset_9114 = (this$__$1["offset"]);
-(this$__$1["bitPosition"] = offset_9114);
+var offset_13513 = (this$__$1["offset"]);
+(this$__$1["bitPosition"] = offset_13513);
 
-(this$__$1["offset"] = (offset_9114 + (1)));
+(this$__$1["offset"] = (offset_13513 + (1)));
 } else {
 }
 
@@ -654,23 +654,23 @@ return (this$__$1["littleEndian"] = little_endian);
 
 ByteBuffer.prototype.seria$buffer$Buffer$clear_BANG_$arity$1 = (function (this$){
 var this$__$1 = this;
-var G__9113 = this$__$1;
-(G__9113["offset"] = (0));
+var G__13512 = this$__$1;
+(G__13512["offset"] = (0));
 
-(G__9113["bitIndex"] = (0));
+(G__13512["bitIndex"] = (0));
 
-(G__9113["bitPosition"] = (-1));
+(G__13512["bitPosition"] = (-1));
 
-(G__9113["bitBuffer"] = (0));
+(G__13512["bitBuffer"] = (0));
 
-return G__9113;
+return G__13512;
 });
 
 ByteBuffer.prototype.seria$buffer$Buffer$compress$arity$1 = (function (this$){
 var this$__$1 = this;
-var bit_position_9115 = (this$__$1["bitPosition"]);
-if(cljs.core.not_EQ_.cljs$core$IFn$_invoke$arity$2(bit_position_9115,(-1))){
-this$__$1.writeInt8((this$__$1["bitBuffer"]),bit_position_9115);
+var bit_position_13514 = (this$__$1["bitPosition"]);
+if(cljs.core.not_EQ_.cljs$core$IFn$_invoke$arity$2(bit_position_13514,(-1))){
+this$__$1.writeInt8((this$__$1["bitBuffer"]),bit_position_13514);
 } else {
 }
 
@@ -694,8 +694,8 @@ return seria.buffer.write_byte_BANG_(buffer,value__$2);
 } else {
 seria.buffer.write_byte_BANG_(buffer,((cljs.core.unchecked_int(value__$2) & (127)) | (128)));
 
-var G__9116 = (value__$2 >>> (7));
-value__$2 = G__9116;
+var G__13515 = (value__$2 >>> (7));
+value__$2 = G__13515;
 continue;
 }
 break;
@@ -718,10 +718,10 @@ return value__$1;
 return seria.buffer.decode_negative(value__$1);
 }
 } else {
-var G__9117 = value__$1;
-var G__9118 = (shift + (7));
-value = G__9117;
-shift = G__9118;
+var G__13516 = value__$1;
+var G__13517 = (shift + (7));
+value = G__13516;
+shift = G__13517;
 continue;
 }
 }
@@ -734,13 +734,16 @@ return seria.buffer.clear_BANG_(ByteBuffer.wrap(raw));
 seria.buffer.allocate = (function seria$buffer$allocate(size){
 return seria.buffer.clear_BANG_(ByteBuffer.allocate(size));
 });
-seria.buffer.write_headers_BANG_ = (function seria$buffer$write_headers_BANG_(buffer,schema_id,diffed_QMARK_){
-return seria.buffer.write_boolean_BANG_(seria.buffer.write_varint_BANG_(seria.buffer.write_boolean_BANG_(seria.buffer.clear_BANG_(buffer),seria.buffer.little_endian_QMARK_(buffer)),schema_id),diffed_QMARK_);
+seria.buffer.write_headers_BANG_ = (function seria$buffer$write_headers_BANG_(buffer,schema_id,meta_schema_id,diffed_QMARK_){
+var G__13519 = seria.buffer.write_boolean_BANG_(seria.buffer.write_varint_BANG_(seria.buffer.write_boolean_BANG_(seria.buffer.write_boolean_BANG_(seria.buffer.clear_BANG_(buffer),seria.buffer.little_endian_QMARK_(buffer)),diffed_QMARK_),schema_id),meta_schema_id);
+if(cljs.core.truth_(meta_schema_id)){
+return seria.buffer.write_varint_BANG_(G__13519,meta_schema_id);
+} else {
+return G__13519;
+}
 });
 seria.buffer.read_headers_BANG_ = (function seria$buffer$read_headers_BANG_(buffer){
 seria.buffer.little_endian_BANG_(buffer,seria.buffer.read_boolean_BANG_(buffer));
 
-var schema_id = seria.buffer.read_varint_BANG_(buffer);
-var diffed_QMARK_ = seria.buffer.read_boolean_BANG_(buffer);
-return new cljs.core.PersistentArrayMap(null, 2, [cljs.core.cst$kw$schema_DASH_id,schema_id,cljs.core.cst$kw$diffed_QMARK_,diffed_QMARK_], null);
+return new cljs.core.PersistentArrayMap(null, 3, [cljs.core.cst$kw$diffed_QMARK_,seria.buffer.read_boolean_BANG_(buffer),cljs.core.cst$kw$schema_DASH_id,seria.buffer.read_varint_BANG_(buffer),cljs.core.cst$kw$meta_DASH_schema_DASH_id,(cljs.core.truth_(seria.buffer.read_boolean_BANG_(buffer))?seria.buffer.read_varint_BANG_(buffer):null)], null);
 });

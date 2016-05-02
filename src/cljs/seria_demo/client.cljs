@@ -1,12 +1,14 @@
 (ns seria-demo.client
   (:require [seria-demo.websocket :as ws]
-            [seria-demo.common :as common]))
+            [seria-demo.common :as common]
+            [cljs.pprint :as pprint]))
 
 (def ws-atom (atom nil))
 
 (def websocket-callbacks
-  {:on-message  (fn [event] (println "Message received: "
-                                     (:value (common/unpack (.-data event))))
+  {:on-message  (fn [event] (println "Message received:")
+                            (pprint/pprint (:value (common/unpack (.-data event))))
+                            (println (str "Size: " (.-byteLength (.-data event)) " bytes"))
                             (ws/send! @ws-atom (.-data event)))
    :on-open     (fn []      (println "Channel opened"))
    :on-error    (fn [event] (println "Channel error: " (.-data event)))

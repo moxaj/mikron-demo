@@ -57,7 +57,7 @@
   {:pre [(diffed? value)]}
   (:value value))
 
-;; interp numbers
+;; interp
 
 (defn interp-numbers [value-1 value-2 time-factor]
   #?(:clj  (long (+' value-1 (* time-factor (-' value-2 value-1))))
