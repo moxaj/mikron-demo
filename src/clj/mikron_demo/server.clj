@@ -1,11 +1,11 @@
-(ns seria-demo.server
+(ns mikron-demo.server
   (:require [immutant.web :as web]
             [immutant.web.async :as async]
             [immutant.web.middleware :as web-middleware]
             [compojure.core :refer :all]
             [compojure.route :as route]
             [ring.util.response :as ring]
-            [seria-demo.common :as common]
+            [mikron-demo.common :as common]
             [clojure.pprint :as pprint]))
 
 (def websocket-callbacks

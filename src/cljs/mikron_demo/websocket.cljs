@@ -1,4 +1,4 @@
-(ns seria-demo.websocket)
+(ns mikron-demo.websocket)
 
 (def field-map {:on-message  "onmessage"
                 :on-open     "onopen"

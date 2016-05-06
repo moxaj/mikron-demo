@@ -1,7 +1,7 @@
-(ns seria-demo.common
-  (:require [seria.core :as seria]))
+(ns mikron-demo.common
+  (:require [mikron.core :as mikron]))
 
-(seria/defprocessors [pack gen unpack]
+(mikron/defprocessors [pack gen unpack]
   {:schemas {:body     [:record {:user-data [:record {:id :int}]
                                  :position  :coord
                                  :angle     :float

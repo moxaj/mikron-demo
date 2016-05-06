@@ -1,6 +1,6 @@
-(ns seria-demo.client
-  (:require [seria-demo.websocket :as ws]
-            [seria-demo.common :as common]
+(ns mikron-demo.client
+  (:require [mikron-demo.websocket :as ws]
+            [mikron-demo.common :as common]
             [cljs.pprint :as pprint]))
 
 (def ws-atom (atom nil))

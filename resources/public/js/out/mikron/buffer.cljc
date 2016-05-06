@@ -1,7 +1,7 @@
-(ns seria.buffer
+(ns mikron.buffer
   "Buffer protocol and implementations."
-  #?(:clj (:import [seria SeriaByteBuffer]))
-  (:require [seria.common :as common]
+  #?(:clj (:import [mikron MikronByteBuffer]))
+  (:require [mikron.common :as common]
             #?(:cljs [cljsjs.bytebuffer])))
 
 (defprotocol Buffer
@@ -35,7 +35,7 @@
   (clear! [this])
   (compress [this]))
 
-#?(:clj  (extend-type SeriaByteBuffer
+#?(:clj  (extend-type MikronByteBuffer
            Buffer
            (read-byte!    [this] (.getByte this))
            (read-short!   [this] (.getShort this))
@@ -149,7 +149,7 @@
     (loop [value 0
            shift 0]
       (if-not (< shift 64)
-        (throw (common/cljc-exception "Malformed varint!"))
+        (throw (common/exception "Malformed varint!"))
         (let [b     (read-byte! buffer)
               value (bit-or value (bit-shift-left (bit-and b 127)
                                                   shift))]
@@ -160,14 +160,14 @@
              (recur value (unchecked-add shift 7))))))))
 
 (defn wrap [raw]
-  (clear! #?(:clj  (SeriaByteBuffer/wrap ^bytes raw)
+  (clear! #?(:clj  (MikronByteBuffer/wrap ^bytes raw)
              :cljs (.wrap js/ByteBuffer raw))))
 
 (defn allocate [size]
-  (clear! #?(:clj  (SeriaByteBuffer/allocate size)
+  (clear! #?(:clj  (MikronByteBuffer/allocate size)
              :cljs (.allocate js/ByteBuffer size))))
 
-(defn write-headers! [#?(:clj ^SeriaByteBuffer buffer :cljs buffer) schema-id meta-schema-id diffed?]
+(defn write-headers! [#?(:clj ^MikronByteBuffer buffer :cljs buffer) schema-id meta-schema-id diffed?]
   (-> buffer
       (clear!)
       (write-boolean! (little-endian? buffer))
@@ -177,9 +177,9 @@
       (cond->
          meta-schema-id (write-varint! meta-schema-id))))
 
-(defn read-headers! [#?(:clj ^SeriaByteBuffer buffer :cljs buffer)]
+(defn read-headers! [#?(:clj ^MikronByteBuffer buffer :cljs buffer)]
   (little-endian! buffer (read-boolean! buffer))
-  {:diffed?   (read-boolean! buffer)
-   :schema-id (read-varint! buffer)
+  {:diffed?        (read-boolean! buffer)
+   :schema-id      (read-varint! buffer)
    :meta-schema-id (when (read-boolean! buffer)
                      (read-varint! buffer))})
