@@ -18,7 +18,6 @@
   (and websocket (= 1 (.-readyState websocket))))
 
 (defn send! [websocket message]
-  (if (open? websocket)
-    (do (.send websocket message)
-        true)
-    false))
+  (when (open? websocket)
+    (.send websocket message)
+    true))

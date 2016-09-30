@@ -6,23 +6,30 @@
             [compojure.route :as route]
             [ring.util.response :as ring]
             [mikron-demo.common :as common]
-            [clojure.pprint :as pprint]))
+            [clojure.pprint :as pprint]
+            [clojure.walk :as walk]))
+
+(def sent-value (atom nil))
+
+(defn on-open [channel]
+  (println "Channed opened.")
+  (let [value (common/gen :all)]
+    (reset! sent-value value)
+    (async/send! channel (common/pack :all value))
+    (println "Value sent.")))
+
+(defn on-message [channel message]
+  (let [{:keys [value schema]} (common/unpack message)]
+    (println "Value received.")
+    (println "Equal to sent: " (= value @sent-value))))
+
+(defn on-close [channel {:keys [code reason]}]
+  (println "Channel closed: " code ", " reason "."))
 
 (def websocket-callbacks
-  (let [sent-value (atom nil)]
-    {:on-open    (fn [channel]
-                   (println "Channel opened")
-                   (let [value (common/gen :snapshot)]
-                     (reset! sent-value value)
-                     (async/send! channel (common/pack :snapshot value))))
-     :on-close   (fn [channel {:keys [code reason]}]
-                   (println "Channel closed:" code reason))
-     :on-message (fn [channel message]
-                   (let [value (:value (common/unpack message))]
-                     (println "Message received:")
-                     (pprint/pprint value)
-                     (println (format "Size: %d bytes" (count (seq message))))
-                     (println (format "Equal to sent: %s" (= value @sent-value)))))}))
+  {:on-open    on-open
+   :on-message on-message
+   :on-close   on-close})
 
 (defroutes my-routes
   (GET "/" [] (ring/resource-response "index.html" {:root "public"}))
@@ -34,10 +41,7 @@
 
 (def server (atom nil))
 
-(defn restart-server []
-  (when @server
-    (swap! server web/stop))
-  (reset! server (web/run app :port 8080))
-  "Server running!")
-
-(restart-server)
+(swap! server (fn [value]
+                (when value
+                  (web/stop value))
+                (web/run app :port 8080)))

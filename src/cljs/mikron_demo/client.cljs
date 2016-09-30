@@ -5,14 +5,26 @@
 
 (def ws-atom (atom nil))
 
+(defn on-open []
+  (println "Channel opened."))
+
+(defn on-message [event]
+  (let [{:keys [value schema]} (common/unpack (.-data event))]
+    (println "Value received: " schema)
+    (pprint/pprint value)
+    (ws/send! @ws-atom (common/pack schema value))))
+
+(defn on-error [event]
+  (println "Channel error: " (.-data event) "."))
+
+(defn on-close []
+  (println "Channel closed."))
+
 (def websocket-callbacks
-  {:on-message  (fn [event] (println "Message received:")
-                            (pprint/pprint (:value (common/unpack (.-data event))))
-                            (println (str "Size: " (.-byteLength (.-data event)) " bytes"))
-                            (ws/send! @ws-atom (.-data event)))
-   :on-open     (fn []      (println "Channel opened"))
-   :on-error    (fn [event] (println "Channel error: " (.-data event)))
-   :on-close    (fn []      (println "Channel closed"))
+  {:on-open     on-open
+   :on-message  on-message
+   :on-error    on-error
+   :on-close    on-close
    :binary-type "arraybuffer"})
 
 (defn init-ws! []
