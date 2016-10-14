@@ -1,13 +1,13 @@
-# mikron-demo
+# mikron.demo
 
-This is a simple demo project demonstrating the cross-platform usage of
-[mikron](https://github.com/moxaj/mikron). Simply fire up the server, visit
-`localhost:8080`, open the developer tab, and refresh the page.
+This is a simple demo project demonstrating the cross-platform usage of [mikron](https://github.com/moxaj/mikron). Simply fire up the server (by evaluating the `mikron-demo.server` namespace), visit `localhost:8080`, and open the developer tab.
 
-Whenever a client connects, the server generates a `snapshot` and sends it to
-the client. The client logs it to the browser console, and sends it back to the
-server. Upon receiving the original message, the server prints it to the standard
-output.
+What happens:
+
+1. the **client**, upon loading, opens a websocket connection to the **server**
+2. the **server** generates a message, packs it, and sends it to the **client**
+3. the **client** unpacks the received message, prints it, packs it, and sends it back to the **server**
+4. the **server** unpacks the received message and compares it to the original
 
 ## License
 

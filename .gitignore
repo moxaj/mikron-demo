@@ -3,6 +3,7 @@
 /resources/public/js
 /checkouts
 /node
+*.bat
 pom.xml
 pom.xml.asc
 *.jar
