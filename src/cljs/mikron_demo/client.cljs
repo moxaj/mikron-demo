@@ -1,18 +1,19 @@
 (ns mikron-demo.client
-  (:require [mikron-demo.websocket :as ws]
-            [mikron-demo.common :as common]
-            [cljs.pprint :as pprint]))
+  (:require [clojure.pprint :as pprint]
+            [mikron.core :refer [pack unpack]]
+            [mikron-demo.common]
+            [mikron-demo.websocket :as ws]))
 
-(def ws-atom (atom nil))
+(def ws-atom (promise nil))
 
 (defn on-open []
   (println "Channel opened."))
 
 (defn on-message [event]
-  (let [{:keys [value schema]} (common/unpack (.-data event))]
+  (let [{:keys [value schema]} (unpack (.-data event))]
     (println "Value received: " schema)
     (pprint/pprint value)
-    (ws/send! @ws-atom (common/pack schema value))))
+    (ws/send! @ws-atom (pack schema value))))
 
 (defn on-error [event]
   (println "Channel error: " (.-data event) "."))
@@ -28,8 +29,8 @@
    :binary-type "arraybuffer"})
 
 (defn init-ws! []
-  (reset! ws-atom (ws/open (str "ws://" (.-host js/location))
-                           websocket-callbacks)))
+  (deliver ws-atom (ws/open (str "ws://" (.-host js/location))
+                            websocket-callbacks)))
 
 (defn init-app! []
   (enable-console-print!)

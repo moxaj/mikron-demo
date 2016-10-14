@@ -1,30 +1,36 @@
 (ns mikron-demo.server
-  (:require [immutant.web :as web]
+  (:require [clojure.pprint :as pprint]
+            [mikron-demo.common :as common]
+            [mikron.core :refer [pack unpack gen]]
+            [immutant.web :as web]
             [immutant.web.async :as async]
             [immutant.web.middleware :as web-middleware]
             [compojure.core :refer :all]
             [compojure.route :as route]
-            [ring.util.response :as ring]
-            [mikron-demo.common :as common]
-            [clojure.pprint :as pprint]
-            [clojure.walk :as walk]))
+            [ring.util.response :as ring])
+  (:import [java.util Arrays]))
 
 (def sent-value (atom nil))
 
+(defn equal? [x y]
+  (if (not= (type x) (Class/forName "[B"))
+    (= x y)
+    (Arrays/equals ^bytes x ^bytes y)))
+
 (defn on-open [channel]
   (println "Channed opened.")
-  (let [value (common/gen :all)]
+  (let [value (gen ::common/message)]
     (reset! sent-value value)
-    (async/send! channel (common/pack :all value))
+    (async/send! channel (pack ::common/message value))
     (println "Value sent.")))
 
 (defn on-message [channel message]
-  (let [{:keys [value schema]} (common/unpack message)]
+  (let [{:keys [value schema]} (unpack message)]
     (println "Value received.")
-    (println "Equal to sent: " (= value @sent-value))))
+    (println "Equals to sent: " (every? true? (map equal? value @sent-value)))))
 
 (defn on-close [channel {:keys [code reason]}]
-  (println "Channel closed: " code ", " reason "."))
+  (println "Channel closed."))
 
 (def websocket-callbacks
   {:on-open    on-open
