@@ -8,7 +8,7 @@
                  [org.immutant/immutant "2.1.5"]
                  [ring/ring-core "1.5.0"]
                  [compojure "1.5.1"]
-                 [moxaj/mikron "0.4.0"]]
+                 [moxaj/mikron "0.5.0"]]
   :plugins [[lein-cljsbuild "1.1.4"]]
   :source-paths ["src/cljc" "src/clj"]
   :cljsbuild {:builds [{:id "browser"
