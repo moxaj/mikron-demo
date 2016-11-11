@@ -1,7 +1,7 @@
 (ns mikron-demo.server
   (:require [clojure.pprint :as pprint]
             [mikron-demo.common :as common]
-            [mikron.core :refer [pack unpack gen]]
+            [mikron.core :as mikron]
             [immutant.web :as web]
             [immutant.web.async :as async]
             [immutant.web.middleware :as web-middleware]
@@ -19,13 +19,13 @@
 
 (defn on-open [channel]
   (println "Channed opened.")
-  (let [value (gen ::common/message)]
+  (let [value (mikron/gen common/message)]
     (reset! sent-value value)
-    (async/send! channel (pack ::common/message value))
+    (async/send! channel (mikron/pack common/message value))
     (println "Value sent.")))
 
 (defn on-message [channel message]
-  (let [{:keys [value schema]} (unpack message)]
+  (let [{:keys [value]} (mikron/unpack common/message message)]
     (println "Value received.")
     (println "Equals to sent: " (every? true? (map equal? value @sent-value)))))
 

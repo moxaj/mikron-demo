@@ -16,7 +16,7 @@
                         :compiler     {:asset-path "js/out"
                                        :output-to "resources/public/js/app.js"
                                        :output-dir "resources/public/js/out"
-                                       :optimizations :advanced
+                                       :optimizations :none
                                        :parallel-build true
                                        :pretty-print false
                                        :main "mikron-demo.client"}}]})
