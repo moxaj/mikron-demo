@@ -22,7 +22,8 @@
   (let [value (mikron/gen common/message)]
     (reset! sent-value value)
     (async/send! channel (mikron/pack common/message value))
-    (println "Value sent.")))
+    (println "Value sent.")
+    (pprint/pprint value)))
 
 (defn on-message [channel message]
   (let [{:keys [value]} (mikron/unpack common/message message)]

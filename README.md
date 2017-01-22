@@ -4,7 +4,7 @@ This is a simple demo project demonstrating the cross-platform usage of [mikron]
 
 Instructions:
 
-1. `lein do cljsbuild once, run -m mikron-demo.server`
+1. `lein do clean, cljsbuild once, run -m mikron-demo.server`
 2. visit `localhost:8080`
 
 What happens:

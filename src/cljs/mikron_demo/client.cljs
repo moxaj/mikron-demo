@@ -4,6 +4,11 @@
             [mikron-demo.common :as common]
             [mikron-demo.websocket :as ws]))
 
+(extend-type js/ArrayBuffer
+  Object
+  (toString [this]
+    (str (js/Int8Array. this))))
+
 (def ws-atom (atom nil))
 
 (defn on-open []
