@@ -8,7 +8,7 @@
                  [org.immutant/immutant "2.1.5"]
                  [ring/ring-core "1.5.0"]
                  [compojure "1.5.1"]
-                 [moxaj/mikron "0.5.0"]]
+                 [moxaj/mikron "0.6.0"]]
   :plugins [[lein-cljsbuild "1.1.4"]]
   :source-paths ["src/cljc" "src/clj"]
   :cljsbuild {:builds [{:id "browser"
@@ -18,5 +18,4 @@
                                        :output-dir "resources/public/js/out"
                                        :optimizations :none
                                        :parallel-build true
-                                       :pretty-print false
                                        :main "mikron-demo.client"}}]})

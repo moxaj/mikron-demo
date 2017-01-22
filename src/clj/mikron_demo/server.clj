@@ -47,7 +47,8 @@
 
 (def server (atom nil))
 
-(swap! server (fn [value]
-                (when value
-                  (web/stop value))
-                (web/run app :port 8080)))
+(defn -main []
+  (swap! server (fn [value]
+                  (when value
+                    (web/stop value))
+                  (web/run app :port 8080))))

@@ -1,6 +1,11 @@
 # mikron.demo
 
-This is a simple demo project demonstrating the cross-platform usage of [mikron](https://github.com/moxaj/mikron). Simply fire up the server (by evaluating the `mikron-demo.server` namespace), visit `localhost:8080`, and open the developer tab.
+This is a simple demo project demonstrating the cross-platform usage of [mikron](https://github.com/moxaj/mikron).
+
+Instructions:
+
+1. `lein do cljsbuild once, run -m mikron-demo.server`
+2. visit `localhost:8080`
 
 What happens:
 
