@@ -2,10 +2,15 @@
 
 This is a simple demo project demonstrating the cross-platform usage of [mikron](https://github.com/moxaj/mikron).
 
-Instructions:
+To run:
 
-1. `lein do clean, cljsbuild once, run -m mikron-demo.server`
-2. visit `localhost:8080`
+1. Install [boot](https://github.com/boot-clj/boot) if you don't already have it
+2. Run `boot run`
+3. Visit `localhost:8080`, and open the developer console
+
+To connect to the cljs repl:
+1. Run `boot repl -c`
+2. Inside the repl, enter `(boot-cljs-repl/start-repl)`
 
 What happens:
 
@@ -16,6 +21,6 @@ What happens:
 
 ## License
 
-Copyright © 2016 Viktor Magyari
+Copyright © 2017 Viktor Magyari
 
 Distributed under the Eclipse Public License either version 1.0.
