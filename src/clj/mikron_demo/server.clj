@@ -1,13 +1,13 @@
 (ns mikron-demo.server
   (:require [clojure.pprint :as pprint]
+            [mikron.runtime.core :as mikron]
             [mikron-demo.common :as common]
-            [mikron.core :as mikron]
             [immutant.web :as web]
             [immutant.web.async :as async]
             [immutant.web.middleware :as web-middleware]
-            [compojure.core :refer :all]
-            [compojure.route :as route]
-            [ring.util.response :as ring])
+            [compojure.core :as compojure]
+            [ring.util.response :as ring.response]
+            [ring.middleware.resource :as ring.resource])
   (:import [java.util Arrays]))
 
 (def sent-value (atom nil))
@@ -19,16 +19,15 @@
 
 (defn on-open [channel]
   (println "Channed opened.")
-  (let [value (mikron/gen common/message)]
+  (let [value (mikron/gen ::common/message)]
     (reset! sent-value value)
-    (async/send! channel (mikron/pack common/message value))
+    (async/send! channel (mikron/pack ::common/message value))
     (println "Value sent.")
     (pprint/pprint value)))
 
 (defn on-message [channel message]
-  (let [{:keys [value]} (mikron/unpack common/message message)]
-    (println "Value received.")
-    (println "Equals to sent: " (every? true? (map equal? value @sent-value)))))
+  (let [value (mikron/unpack ::common/message message)]
+    (println "Value received. Equal to sent: " (every? true? (map equal? value @sent-value)))))
 
 (defn on-close [channel {:keys [code reason]}]
   (println "Channel closed."))
@@ -38,18 +37,13 @@
    :on-message on-message
    :on-close   on-close})
 
-(defroutes my-routes
-  (GET "/" [] (ring/resource-response "index.html" {:root "public"}))
-  (route/resources "/"))
+(def handler
+  (-> (compojure/GET "/" [] (ring.response/content-type
+                              (ring.response/resource-response "index.html" {:root "/"})
+                              "text/html"))
+      (ring.resource/wrap-resource "")
+      (web-middleware/wrap-session {:timeout 20})
+      (web-middleware/wrap-websocket websocket-callbacks)))
 
-(def app (-> my-routes
-             (web-middleware/wrap-session {:timeout 20})
-             (web-middleware/wrap-websocket websocket-callbacks)))
-
-(def server (atom nil))
-
-(defn -main []
-  (swap! server (fn [value]
-                  (when value
-                    (web/stop value))
-                  (web/run app :port 8080))))
+(defn run []
+  (web/run handler :port 8080))

@@ -6,12 +6,11 @@
                 :on-close    "onclose"
                 :binary-type "binaryType"})
 
-(defn open [url args]
+(defn open! [url args]
   (let [websocket (js/WebSocket. url)]
-    (run! (fn [[field value]]
-            (when-let [js-field (field-map field)]
-              (aset websocket js-field value)))
-          args)
+    (doseq [[field value] args]
+      (when-let [js-field (field-map field)]
+        (aset websocket js-field value)))
     websocket))
 
 (defn open? [websocket]

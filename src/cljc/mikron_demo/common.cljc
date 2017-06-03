@@ -1,5 +1,5 @@
 (ns mikron-demo.common
-  (:require [mikron.core :as mikron]))
+  (:require [mikron.runtime.core :as mikron]))
 
 (defn int->string [n]
   (str n))
@@ -8,7 +8,7 @@
   #?(:clj  (Integer/parseInt s)
      :cljs (js/parseInt s)))
 
-(mikron/defschema message
+(mikron/defschema ::message
   [:tuple [:byte :short :int :long :float :double :boolean :char
            :ubyte :ushort :uint :varint
            :string :keyword :symbol :any :nil :binary
@@ -21,8 +21,9 @@
            [:map {:sorted-by <} :long :byte]
            [:map {:sorted-by >} :short :uint]
            [:optional :byte]
-           [:enum [:cat :dog :measurement :error]]
+           [:enum #{:cat :dog :measurement :error}]
            [:tuple [:int :float :double]]
            [:record {:a :int :b :short :c :byte}]
-           [:multi number? {true :int false [:enum [:hi :there]]}]
-           [:wrapped string->int int->string :int]]])
+           [:multi number? {true :int false [:enum #{:hi :there}]}]
+           [:wrapped string->int int->string :int]]]
+  :processor-types #{:pack :unpack :gen :valid?})           
