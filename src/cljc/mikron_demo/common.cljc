@@ -25,5 +25,6 @@
            [:tuple [:int :float :double]]
            [:record {:a :int :b :short :c :byte}]
            [:multi number? {true :int false [:enum #{:hi :there}]}]
-           [:wrapped string->int int->string :int]]]
-  :processor-types #{:pack :unpack :gen :valid?})           
+           [:wrapped string->int int->string :int]
+           #mikron-demo/example-template [:byte :keyword :string]]]
+  :processor-types #{:pack :unpack :gen :valid?})

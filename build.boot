@@ -16,12 +16,14 @@
                     [ring/ring-core              "1.5.0"]
                     [compojure                   "1.5.1"]])
 
+(require '[mikron-demo.common-templates])
+
+(load-data-readers!)
+
 (require '[mikron-demo.server :as demo.server]
          '[adzerk.boot-cljs :as boot-cljs]
          '[adzerk.boot-cljs-repl :as boot-cljs-repl]
          '[adzerk.boot-reload :as boot-reload])
-
-(load-data-readers!)
 
 (deftask dev
   "Dev task for proto-repl."
