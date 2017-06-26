@@ -1,4 +1,6 @@
-(ns mikron-demo.common-templates)
+(ns mikron-demo.common-templates
+  (:require [mikron.runtime.core :as mikron]))
 
-(defn example-template [schemas]
-  `[:tuple [~@(interleave schemas schemas)]])
+(mikron/deftemplate :mikron-demo.common/demo-template
+  (fn [schemas]
+    `[:tuple [~@(interleave schemas schemas)]]))

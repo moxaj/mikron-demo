@@ -1,8 +1,8 @@
 (set-env!
   :resource-paths #{"src/clj" "src/cljc" "src/cljs" "resources"}
-  :dependencies   '[[org.clojure/clojure         "1.9.0-alpha16"]
-                    [org.clojure/clojurescript   "1.9.542"]
-                    [moxaj/mikron                "0.6.1-SNAPSHOT"]
+  :dependencies   '[[org.clojure/clojure         "1.9.0-alpha17"]
+                    [org.clojure/clojurescript   "1.9.562"]
+                    [moxaj/mikron                "0.6.3-SNAPSHOT"]
 
                     [adzerk/boot-cljs            "1.7.228-2"]
                     [adzerk/boot-cljs-repl       "0.3.0"]
@@ -15,10 +15,6 @@
                     [org.immutant/immutant       "2.1.5"]
                     [ring/ring-core              "1.5.0"]
                     [compojure                   "1.5.1"]])
-
-(require '[mikron-demo.common-templates])
-
-(load-data-readers!)
 
 (require '[mikron-demo.server :as demo.server]
          '[adzerk.boot-cljs :as boot-cljs]

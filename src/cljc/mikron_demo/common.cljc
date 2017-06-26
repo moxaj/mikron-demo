@@ -1,5 +1,6 @@
 (ns mikron-demo.common
-  (:require [mikron.runtime.core :as mikron]))
+  (:require [mikron.runtime.core :as mikron]
+            [mikron-demo.common-templates]))
 
 (defn int->string [n]
   (str n))
@@ -26,5 +27,5 @@
            [:record {:a :int :b :short :c :byte}]
            [:multi number? {true :int false [:enum #{:hi :there}]}]
            [:wrapped string->int int->string :int]
-           #mikron-demo/example-template [:byte :keyword :string]]]
+           [::demo-template [:byte :keyword :string]]]]
   :processor-types #{:pack :unpack :gen :valid?})
