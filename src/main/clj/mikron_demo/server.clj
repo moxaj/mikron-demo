@@ -10,14 +10,20 @@
             [ring.middleware.resource :as ring.resource])
   (:import [java.util Arrays]))
 
-(def sent-value (atom nil))
+(def sent-value
+  "An atom holding the value of the last sent snapshot."
+  (atom nil))
 
-(defn equal? [x y]
+(defn equal?
+  "Returns `true` if the arguments are equal, `false` otherwise."
+  [x y]
   (if (not= (type x) (Class/forName "[B"))
     (= x y)
     (Arrays/equals ^bytes x ^bytes y)))
 
-(defn on-open [channel]
+(defn on-open
+  "'onopen' websocket callback handler."
+  [channel]
   (println "Channed opened.")
   (let [value (mikron/gen ::common/message)]
     (reset! sent-value value)
@@ -25,19 +31,25 @@
     (println "Value sent.")
     (pprint/pprint value)))
 
-(defn on-message [channel message]
+(defn on-message
+  "'onmessage' websocket callback handler."
+  [channel message]
   (let [value (mikron/unpack ::common/message message)]
     (println "Value received. Equal to sent: " (every? true? (map equal? value @sent-value)))))
 
-(defn on-close [channel {:keys [code reason]}]
+(defn on-close
+  "'onclose' websocket callback handler."
+  [channel {:keys [code reason]}]
   (println "Channel closed."))
 
 (def websocket-callbacks
+  "Websocket callback handler mapping."
   {:on-open    on-open
    :on-message on-message
    :on-close   on-close})
 
 (def handler
+  "Ring handler."
   (-> (compojure/GET "/" [] (ring.response/content-type
                               (ring.response/resource-response "index.html" {:root "/"})
                               "text/html"))
@@ -45,5 +57,7 @@
       (web-middleware/wrap-session {:timeout 20})
       (web-middleware/wrap-websocket websocket-callbacks)))
 
-(defn run []
+(defn run
+  "Spins up the web server."
+  []
   (web/run handler :port 8080))

@@ -9,35 +9,50 @@
   (toString [this]
     (str (js/Int8Array. this))))
 
-(def ws-atom (atom nil))
+(def ws-atom
+  "An atom which holds the websocket connection."
+  (atom nil))
 
-(defn on-open []
+(defn on-open
+  "'onopen' websocket callback handler."
+  []
   (println "Channel opened."))
 
-(defn on-message [event]
+(defn on-message
+  "'onmessage' websocket callback handler."
+  [event]
   (let [value (mikron/unpack ::common/message (.-data event))]
     (println "Value received: ")
     (pprint/pprint value)
     (ws/send! @ws-atom (mikron/pack ::common/message value))))
 
-(defn on-error [event]
+(defn on-error
+  "'onerror' websocket callback handler."
+  [event]
   (println "Channel error: " (.-data event) "."))
 
-(defn on-close []
+(defn on-close
+  "'onclose' websocket callback handler."
+  []
   (println "Channel closed."))
 
 (def websocket-callbacks
+  "Websocket callback handler mapping."
   {:on-open     on-open
    :on-message  on-message
    :on-error    on-error
    :on-close    on-close
    :binary-type "arraybuffer"})
 
-(defn init-ws! []
+(defn init-ws!
+  "Initializes the websocket connection."
+  []
   (reset! ws-atom (ws/open! (str "ws://" (.-host js/location))
                             websocket-callbacks)))
 
-(defn init-app! []
+(defn init-app!
+  "Initializes the application."
+  []
   (enable-console-print!)
   (init-ws!))
 
