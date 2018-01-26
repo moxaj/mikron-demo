@@ -4,8 +4,8 @@
                     "src/main/cljs"
                     "src/main/resources"}
   :dependencies   '[;; Clojure and ClojureScript
-                    [org.clojure/clojure         "1.9.0-alpha19"]
-                    [org.clojure/clojurescript   "1.9.908"]
+                    [org.clojure/clojure         "1.9.0"]
+                    [org.clojure/clojurescript   "1.9.946"]
 
                     ;; mikron
                     [moxaj/mikron                "0.6.4-SNAPSHOT"]
@@ -17,11 +17,11 @@
 
                     ;; tooling
                     [adzerk/boot-cljs            "1.7.228-2" :scope "test"]
-                    [adzerk/boot-cljs-repl       "0.3.0"     :scope "test"]
-                    [adzerk/boot-reload          "0.5.1"     :scope "test"]
+                    [adzerk/boot-cljs-repl       "0.3.0" :scope "test"]
+                    [adzerk/boot-reload          "0.5.1" :scope "test"]
 
-                    [com.cemerick/piggieback     "0.2.1"  :scope "test"]
-                    [weasel                      "0.7.0"  :scope "test"]
+                    [com.cemerick/piggieback     "0.2.1" :scope "test"]
+                    [weasel                      "0.7.0" :scope "test"]
                     [org.clojure/tools.nrepl     "0.2.12" :scope "test"]])
 
 (require '[mikron-demo.server :as demo.server]
