@@ -33,7 +33,7 @@
   "Dev task for proto-repl."
   []
   (merge-env! :init-ns        'user
-              :resource-paths #{"src/dev/cljc"}
+              :resource-paths #{"src/dev/clj"}
               :dependencies   '[[org.clojure/tools.namespace "0.2.11"]
                                 [proto-repl "0.3.1"]])
   (require 'clojure.tools.namespace.repl)
