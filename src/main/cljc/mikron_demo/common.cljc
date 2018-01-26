@@ -13,7 +13,6 @@
      :cljs (js/parseInt s)))
 
 (mikron/defschema ::message
-  "An example message schema."
   [:tuple [:byte :short :int :long :float :double :boolean :char
            :ubyte :ushort :uint :varint
            :string :keyword :symbol :any :nil :binary
